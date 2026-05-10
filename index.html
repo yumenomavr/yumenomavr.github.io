@@ -89,7 +89,7 @@ const App = () => {
         {page === 'characters' && <CharactersPage t={t} onPress={goPress} />}
       </div>
       <div className={`page ${page==='press'?'active':''}`} data-screen-label="03 Press">
-        {page === 'press' && <PressPage t={t} p={p} onHome={() => setPage('home')} />}
+        {page === 'press' && <PressPage t={t} p={p} />}
       </div>
     </>
   );

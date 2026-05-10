@@ -1,13 +1,8 @@
 // Press kit page — hidden (linked from footer only)
-const PressPage = ({ t, p, onHome }) => (
+const PressPage = ({ t, p }) => (
   <>
     <section className="press-hero">
       <div className="wrap">
-        {onHome && (
-          <button className="press-back" onClick={onHome} aria-label="Back to home">
-            <span aria-hidden="true">←</span> {(t.nav && t.nav.home) || 'Home'}
-          </button>
-        )}
         <div className="eyebrow" style={{marginBottom: 24}}>
           <span className="dot" aria-hidden="true" />{p.hero_eyebrow}<span className="dot" aria-hidden="true" />
         </div>
