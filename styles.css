@@ -904,8 +904,13 @@ section { padding: 140px 0; position: relative; }
 
 /* responsive */
 @media (max-width: 960px) {
-  .wrap, .nav { padding-left: 24px; padding-right: 24px; }
-  .nav-links { display: none; }
+  .wrap, .nav { padding-left: 16px; padding-right: 16px; gap: 12px; }
+  .nav { flex-wrap: wrap; height: auto; padding-top: 10px; padding-bottom: 10px; row-gap: 6px; }
+  .nav-mark .roman { display: none; }
+  .nav-mark { gap: 0; }
+  .nav-links { display: flex; order: 3; flex-basis: 100%; gap: 22px; justify-content: center; padding-top: 4px; border-top: 1px solid var(--line-strong); }
+  .nav-link { font-size: 11px; }
+  .lang-toggle button { width: 32px; padding: 4px 0; font-size: 10px; }
   .concept-grid { grid-template-columns: 1fr; gap: 40px; }
   .loop-phases { grid-template-columns: 1fr; }
   .phase { border-right: none; border-bottom: 1px solid var(--line); }
