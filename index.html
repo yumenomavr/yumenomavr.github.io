@@ -55,7 +55,7 @@ const App = () => {
 
   return (
     <>
-      <div className={`intro ${introDone ? 'gone' : ''}`} data-screen-label="00 Intro">
+      <div className={`intro ${introDone ? 'gone' : ''}`} data-screen-label="00 Intro" aria-hidden={introDone}>
         <div className="intro-kanji">夢の間</div>
         <div className="intro-line">A dream before the last one.</div>
         <button className="intro-skip" onClick={() => setIntroDone(true)}>Enter ↓</button>
@@ -89,7 +89,7 @@ const App = () => {
         {page === 'characters' && <CharactersPage t={t} onPress={goPress} />}
       </div>
       <div className={`page ${page==='press'?'active':''}`} data-screen-label="03 Press">
-        {page === 'press' && <PressPage t={t} p={p} />}
+        {page === 'press' && <PressPage t={t} p={p} onHome={() => setPage('home')} />}
       </div>
     </>
   );

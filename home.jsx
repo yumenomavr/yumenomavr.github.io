@@ -100,9 +100,20 @@ const AudioPlayer = ({ src, kanji, roman, sub }) => {
         </div>
         {sub ? <div className="audio-sub">{sub}</div> : null}
       </div>
-      <div className="audio-track" ref={trackRef} onPointerDown={onTrackDown} role="slider" aria-label="Seek">
-        <div className="audio-fill" style={{width: `${pct}%`}} />
-        <div className="audio-head" style={{left: `${pct}%`}} />
+      <div
+        className="audio-track"
+        ref={trackRef}
+        onPointerDown={onTrackDown}
+        role="slider"
+        aria-label="Seek"
+        aria-valuemin={0}
+        aria-valuemax={Math.round(dur) || 0}
+        aria-valuenow={Math.round(t)}
+        aria-valuetext={`${fmtTime(t)} of ${fmtTime(dur)}`}
+        tabIndex={0}
+      >
+        <div className="audio-fill" style={{width: `${pct}%`}} aria-hidden="true" />
+        <div className="audio-head" style={{left: `${pct}%`}} aria-hidden="true" />
       </div>
       <div className="audio-time">{fmtTime(t)} <span>/</span> {fmtTime(dur)}</div>
     </div>
@@ -111,11 +122,17 @@ const AudioPlayer = ({ src, kanji, roman, sub }) => {
 
 const Hero = ({ t }) => (
   <section className="hero">
-    <div className="hero-bg" />
+    <div className="hero-bg" aria-hidden="true" />
     <div className="eyebrow hero-eyebrow-top">
-      <span className="dot" />{t.hero.eyebrow}<span className="dot" />
+      <span className="dot" aria-hidden="true" />{t.hero.eyebrow}<span className="dot" aria-hidden="true" />
     </div>
-    <img className="hero-art" src="assets/group.jpg" alt="夢の間 — A dream before the last one." />
+    <img
+      className="hero-art"
+      src="assets/group.jpg"
+      alt="夢の間 — A dream before the last one."
+      decoding="async"
+      fetchpriority="high"
+    />
     <div className="hero-meta">
       <span>{t.hero.meta_left}</span>
       <span className="scroll-cue">{t.hero.meta_right}</span>
@@ -177,28 +194,53 @@ const PhaseIcon = ({ kind }) => {
   );
 };
 
-const Loop = ({ t }) => (
-  <section className="loop">
-    <div className="wrap">
-      <div className="section-label">
-        <span className="num">弐</span>
-        <span className="lbl">{t.loop.label}</span>
+const Loop = ({ t }) => {
+  const phaseRefs = React.useRef([]);
+  React.useEffect(() => {
+    const els = phaseRefs.current.filter(Boolean);
+    if (!els.length || typeof IntersectionObserver === 'undefined') {
+      els.forEach(el => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+  return (
+    <section className="loop">
+      <div className="wrap">
+        <div className="section-label">
+          <span className="num">弐</span>
+          <span className="lbl">{t.loop.label}</span>
+        </div>
+        <h2 className="section-title" dangerouslySetInnerHTML={{__html: t.loop.title}} />
+        <div className="loop-phases">
+          {t.loop.phases.map((p, i) => (
+            <div
+              key={i}
+              ref={el => phaseRefs.current[i] = el}
+              className="phase"
+              style={{transitionDelay: `${i * 120}ms`}}
+            >
+              <div className="phase-num">{p.num}</div>
+              <div className="phase-icon" aria-hidden="true"><PhaseIcon kind={i} /></div>
+              <h3 className="phase-title" dangerouslySetInnerHTML={{__html: p.title}} />
+              <div className="phase-title-jp">{p.jp}</div>
+              <p className="phase-body" dangerouslySetInnerHTML={{__html: p.body}} />
+            </div>
+          ))}
+        </div>
       </div>
-      <h2 className="section-title" dangerouslySetInnerHTML={{__html: t.loop.title}} />
-      <div className="loop-phases">
-        {t.loop.phases.map((p, i) => (
-          <div key={i} className="phase">
-            <div className="phase-num">{p.num}</div>
-            <div className="phase-icon"><PhaseIcon kind={i} /></div>
-            <h3 className="phase-title" dangerouslySetInnerHTML={{__html: p.title}} />
-            <div className="phase-title-jp">{p.jp}</div>
-            <p className="phase-body" dangerouslySetInnerHTML={{__html: p.body}} />
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Trailer = ({ t }) => (
   <section className="trailer">
@@ -208,8 +250,8 @@ const Trailer = ({ t }) => (
         <span className="lbl">{t.trailer.label}</span>
       </div>
       <h2 className="section-title" dangerouslySetInnerHTML={{__html: t.trailer.title}} />
-      <div className="trailer-frame" onClick={(e) => e.preventDefault()}>
-        <div className="trailer-corners">
+      <div className="trailer-frame">
+        <div className="trailer-corners" aria-hidden="true">
           <span className="tl" /><span className="tr" /><span className="bl" /><span className="br" />
         </div>
         <div className="trailer-stamp">{t.trailer.stamp}</div>
@@ -237,15 +279,17 @@ const CTA = ({ t }) => (
   <section className="cta">
     <div className="wrap-narrow">
       <div className="eyebrow cta-eyebrow">
-        <span className="dot" />{t.cta.eyebrow}<span className="dot" />
+        <span className="dot" aria-hidden="true" />{t.cta.eyebrow}<span className="dot" aria-hidden="true" />
       </div>
       <h2 className="cta-title" dangerouslySetInnerHTML={{__html: t.cta.title}} />
       <div className="cta-sub">{t.cta.sub}</div>
-      <a href="#" className="btn-steam" onClick={e => e.preventDefault()}>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1" fill="none"/><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+      <button type="button" className="btn-steam" aria-disabled="true" title="Coming soon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1" fill="none"/><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         {t.cta.btn}
-      </a>
-      <a href="#" className="btn-secondary" onClick={e => e.preventDefault()}>✉&nbsp;&nbsp;{t.cta.btn2}</a>
+      </button>
+      <button type="button" className="btn-secondary" aria-disabled="true" title="Coming soon">
+        <span aria-hidden="true">✉</span>&nbsp;&nbsp;{t.cta.btn2}
+      </button>
     </div>
   </section>
 );
