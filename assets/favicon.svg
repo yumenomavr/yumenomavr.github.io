@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#F1E8D4"></rect>
+  <rect x="2" y="2" width="60" height="60" rx="9" fill="none" stroke="#B5654E" stroke-width="1.2" opacity="0.45"></rect>
+  <text x="32" y="46" text-anchor="middle" font-family="&#39;Noto Serif JP&#39;, &#39;Yu Mincho&#39;, &#39;Hiragino Mincho ProN&#39;, serif" font-size="44" font-weight="600" fill="#2B221A" letter-spacing="-1">夢</text>
+  <circle cx="50" cy="14" r="2" fill="#B5654E"></circle>
+</svg>
