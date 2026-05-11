@@ -1170,7 +1170,7 @@ section { padding: 140px 0; position: relative; }
     padding-top: 130px;
     padding-bottom: 90px;
   }
-  .hero-art { max-width: 100%; max-height: none; }
+  .hero-art { max-height: none; }
   .hero-eyebrow-top {
     margin-bottom: 32px;
     padding: 0 24px;
@@ -1218,6 +1218,7 @@ section { padding: 140px 0; position: relative; }
   .trailer-meta { font-size: 15px; padding: 0 24px; }
 
   /* CTA */
+  .wrap-narrow { padding: 0 20px; }
   .cta { padding: 100px 0; }
   .cta::before { font-size: 60vw; }
   .cta-sub { font-size: 18px; margin-bottom: 44px; }
