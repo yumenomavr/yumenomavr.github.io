@@ -288,7 +288,11 @@ const CTA = ({ t }) => (
         {t.cta.btn}
       </button>
       <button type="button" className="btn-secondary" aria-disabled="true" title="Coming soon">
-        <span aria-hidden="true">✉</span>&nbsp;&nbsp;{t.cta.btn2}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="1.75" y="3.5" width="12.5" height="9" stroke="currentColor" strokeWidth="1" fill="none"/>
+          <path d="M2 4.25 L8 9 L14 4.25" stroke="currentColor" strokeWidth="1" fill="none" strokeLinejoin="round"/>
+        </svg>
+        {t.cta.btn2}
       </button>
     </div>
   </section>
