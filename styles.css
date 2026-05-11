@@ -1222,7 +1222,12 @@ section { padding: 140px 0; position: relative; }
   .cta::before { font-size: 60vw; }
   .cta-sub { font-size: 18px; margin-bottom: 44px; }
   .btn-steam,
-  .btn-secondary { white-space: nowrap; }
+  .btn-secondary {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+  }
   .btn-steam { padding: 16px 26px; font-size: 11px; letter-spacing: 0.22em; gap: 12px; }
   .btn-secondary { padding: 16px 24px; font-size: 11px; letter-spacing: 0.22em; margin-left: 0; margin-top: 14px; }
 
